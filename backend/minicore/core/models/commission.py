@@ -15,11 +15,11 @@ class CommissionSeller(BaseModel):
     seller_id: int
     seller_name: str
     total_sales: float
-    porcentaje_commission: float
+    commission_percentage: float
     total_commission: float
 
-class Resumencommissiones(BaseModel):
+class CommissionSumary(BaseModel):
     period: str
-    commissiones: List[CommissionSeller]
+    commissions: List[CommissionSeller]
     total_commissions: float
     total_sales: float
