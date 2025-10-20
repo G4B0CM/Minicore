@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from typing import List
-from backend.minicore.core.models.commission import CommissionRule, DateFilter, CommissionSumary
-from backend.minicore.application.use_cases.commission_use_case import CommissionUseCase
-from backend.minicore.infrastructure.database import db
+from minicore.core.models.commission import CommissionRule, DateFilter, CommissionSumary
+from minicore.application.use_cases.commission_use_case import CommissionUseCase
+from minicore.infrastructure.database import db
 
 router = APIRouter()
 

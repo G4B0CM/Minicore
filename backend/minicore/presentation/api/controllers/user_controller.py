@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 from typing import List
-from backend.minicore.core.models.user import User
-from backend.minicore.infrastructure.database import db
+from minicore.core.models.user import User
+from minicore.infrastructure.database import db
 
 router = APIRouter()
 

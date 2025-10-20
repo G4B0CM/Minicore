@@ -1,8 +1,8 @@
 from typing import List
 from datetime import date
-from backend.minicore.core.models.user import User
-from backend.minicore.core.models.sale import Sale
-from backend.minicore.core.models.commission import CommissionRule
+from minicore.core.models.user import User
+from minicore.core.models.sale import Sale
+from minicore.core.models.commission import CommissionRule
 
 class FakeDb:
     def __init__(self):

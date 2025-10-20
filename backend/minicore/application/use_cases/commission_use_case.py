@@ -1,7 +1,7 @@
 from typing import List
 from datetime import date
-from backend.minicore.core.models.commission import CommissionSeller, CommissionSumary
-from backend.minicore.infrastructure.database import db
+from minicore.core.models.commission import CommissionSeller, CommissionSumary
+from minicore.infrastructure.database import db
 
 
 class CommissionUseCase:
