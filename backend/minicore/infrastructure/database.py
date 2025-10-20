@@ -45,7 +45,7 @@ class FakeDb:
     def get_sales_by_period(self, date_inicio: date, date_fin: date) -> List[Sale]:
         return [v for v in self._sales if date_inicio <= v.date <= date_fin]
 
-    def get_sales_by_vendedor(self, seller_id: int) -> List[Sale]:
+    def get_sales_by_seller(self, seller_id: int) -> List[Sale]:
         return [v for v in self._sales if v.seller_id == seller_id]
 
     def get_commission_rules(self) -> List[CommissionRule]:

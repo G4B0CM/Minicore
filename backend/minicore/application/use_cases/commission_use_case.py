@@ -4,9 +4,9 @@ from backend.minicore.core.models.commission import CommissionSeller, Commission
 from backend.minicore.infrastructure.database import db
 
 
-class CommissionService:
+class CommissionUseCase:
     @staticmethod
-    def obtener_porcentaje_Commission(total_sales: float) -> float:
+    def get_percentage_by_commission(total_sales: float) -> float:
         rules = db.get_commission_rules()
         for rule in rules:
             if total_sales >= rule.min_amount:
@@ -14,28 +14,28 @@ class CommissionService:
         return 0.0
 
     @staticmethod
-    def calcular_Commissiones_por_period(fecha_inicio: date, fecha_fin: date) -> CommissionSumary:
+    def get_commissions_by_period(start_date: date, end_date: date) -> CommissionSumary:
 
-        sales_period = db.get_sales_by_period(fecha_inicio, fecha_fin)
+        sales_period = db.get_sales_by_period(start_date, end_date)
 
-        sales_por_vendedor = {}
+        sales_for_seller = {}
         for sale in sales_period:
-            if sale.seller_id not in sales_por_vendedor:
-                sales_por_vendedor[sale.seller_id] = {
+            if sale.seller_id not in sales_for_seller:
+                sales_for_seller[sale.seller_id] = {
                     'nombre': sale.seller_name,
                     'total': 0.0,
                     'sales': []
                 }
-            sales_por_vendedor[sale.seller_id]['total'] += sale.amount
-            sales_por_vendedor[sale.seller_id]['sales'].append(sale)
+            sales_for_seller[sale.seller_id]['total'] += sale.amount
+            sales_for_seller[sale.seller_id]['sales'].append(sale)
 
         commissiones = []
         total_commissions = 0.0
         total_sales = 0.0
 
-        for seller_id, data in sales_por_vendedor.items():
+        for seller_id, data in sales_for_seller.items():
             total_sales_seller = data['total']
-            porcentaje = CommissionService.obtener_porcentaje_Commission(total_sales_seller)
+            porcentaje = CommissionUseCase.get_percentage_by_commission(total_sales_seller)
             total_commission = total_sales_seller * porcentaje
 
             commission = CommissionSeller(
@@ -51,7 +51,7 @@ class CommissionService:
 
         commissiones.sort(key=lambda x: x.total_commission, reverse=True)
 
-        period_str = f"{fecha_inicio.strftime('%d/%m/%Y')} - {fecha_fin.strftime('%d/%m/%Y')}"
+        period_str = f"{start_date.strftime('%d/%m/%Y')} - {end_date.strftime('%d/%m/%Y')}"
 
         return CommissionSumary(
             period=period_str,
