@@ -7,13 +7,13 @@ from minicore.infrastructure.database import db
 router = APIRouter()
 
 
-@router.get("/reglas", response_model=List[CommissionRule])
+@router.get("/rules", response_model=List[CommissionRule])
 def get_commission_rules():
     """Obtiene todas las reglas de comisión"""
     return db.get_commission_rules()
 
 
-@router.post("/calcular", response_model=CommissionSumary)
+@router.post("/calculate", response_model=CommissionSumary)
 def calculate_commissions(filter: DateFilter):
     """Calcula las commissions para un rango de fechas"""
     if filter.start_date > filter.end_date:

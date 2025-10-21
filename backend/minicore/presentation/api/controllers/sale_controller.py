@@ -1,42 +1,34 @@
-from fastapi import APIRouter, HTTPException
-from typing import List
-from minicore.core.models.commission import CommissionRule, DateFilter, CommissionSumary
-from minicore.application.use_cases.commission_use_case import CommissionUseCase
+from fastapi import APIRouter, HTTPException, Query
+from typing import List, Optional
+from datetime import date
+from minicore.core.models.sale import Sale
 from minicore.infrastructure.database import db
 
 router = APIRouter()
 
 
-@router.get("/rules", response_model=List[CommissionRule])
-def get_commissions_rules():
-    """Obtiene todas las rules de comisión"""
-    return db.get_commission_rules()
+@router.get("/", response_model=List[Sale])
+def get_sales(
+        seller_id: Optional[int] = Query(None, description="Filtrar por seller"),
+        start_date: Optional[date] = Query(None, description="Fecha de inicio"),
+        end_date: Optional[date] = Query(None, description="Fecha de fin")
+):
+    """Obtiene todas las sales con filtros opcionales"""
+    sales = db.get_sales()
+
+    # Aplicar filtros
+    if seller_id:
+        sales = [v for v in sales if v.seller_id == seller_id]
+
+    if start_date and end_date:
+        if start_date > end_date:
+            raise HTTPException(status_code=400, detail="La fecha de inicio debe ser menor o igual a la fecha de fin")
+        sales = [v for v in sales if start_date <= v.date <= end_date]
+
+    return sales
 
 
-@router.post("/calculate", response_model=CommissionSumary)
-def calculate_commissions(filter: DateFilter):
-    """Calcula las comisiones para un rango de fechas"""
-    if filter.start_date > filter.end_date:
-        raise HTTPException(
-            status_code=400,
-            detail="La fecha de inicio debe ser menor o igual a la fecha de fin"
-        )
-
-    return CommissionUseCase.get_commissions_by_period(
-        filter.start_date,
-        filter.end_date
-    )
-
-
-@router.get("/seller/{seller_id}")
-def obtener_comision_seller(seller_id: int):
-    """Obtiene el percentage de comisión que le corresponde a un seller según sus sales totales"""
-    sales = db.get_sales_by_seller(seller_id)
-    total_sales = sum(v.amount for v in sales)
-    percentage = CommissionUseCase.get_percentage_by_commission(total_sales)
-
-    return {
-        "seller_id": seller_id,
-        "total_sales": total_sales,
-        "percentage_comision": percentage
-    }
+@router.get("/seller/{seller_id}", response_model=List[Sale])
+def sales_by_seller(seller_id: int):
+    """Obtiene todas las sales de un seller específico"""
+    return db.get_sales_by_seller(seller_id)
