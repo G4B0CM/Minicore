@@ -6,15 +6,15 @@ Arquitectura frontend + backend desacoplada, lista para despliegue en Render (We
 > Demo funcional: Home (filtro por rango de fechas + KPIs), Usuarios (ventas por vendedor + % comisión), Ventas (tabla con filtros/ordenación/paginación).
 
 ## Tabla de contenidos
-- Características
-- Tecnologías
-- Estructura del proyecto
-- Variables de entorno
-- Instalación y ejecución local
-- API (Endoints y ejemplos)
-- CORS y seguridad
-- Despliegue en Render
-- Licencia
+- [Características](#características) 
+- [Tecnologías](#tecnologías)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Variables de entorno](#variables-de-entorno)
+- [Instalación y ejecución local](#instalación-y-ejecución-local)
+- [API](#api)
+- [CORS y seguridad](#cors-y-seguridad)
+- [Despliegue en Render](#despliegue-en-render)
+- [Licencia](#licencia)
 
 ## Características
 
@@ -103,8 +103,9 @@ pip install -r requirements.txt
 # Ejecutar backend (ajusta el módulo si tu main está en otra ruta)
 uvicorn minicore.main:app --host 0.0.0.0 --port 8000
 ```
+#### Frontend
 ```bash
-Frontend
+
 cd frontend
 # .env con VITE_API_BASE_URL si lo necesitas
 # echo "VITE_API_BASE_URL=http://localhost:8000" > .env
@@ -114,7 +115,7 @@ npm run dev
 # Vite corre en http://localhost:5173
 ```
 
-## API (Endpoints y ejemplos)
+## API
 
 Base URL: http://localhost:8000 (local) / https://<backend>.onrender.com (prod)
 
@@ -153,9 +154,12 @@ Base URL: http://localhost:8000 (local) / https://<backend>.onrender.com (prod)
   "total_sales": 9200.0
 }
 ```
-- GET /api/v1/commissions/seller/{seller_id} → { seller_id, total_sales, percentage_commission }
+- GET /api/v1/commissions/seller/{seller_id} :
+```json
+ { seller_id, total_sales, percentage_commission }
+ ```
 
-### Interfaces relevantes (TS)
+### Interfaces relevantes
 ```ts
 export interface DateFilter { start_date: string; end_date: string; }
 export interface CommissionRule { id: number; min_amount: number; percentage: number; }
