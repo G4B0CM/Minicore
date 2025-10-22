@@ -82,7 +82,7 @@ const VentasPage: React.FC = () => {
 
     const renderHeader = () => {
         return (
-            <div className="flex justify-content-between align-items-center">
+            <div className="flex justify-content-between align-items-center gap-3">
                 <Dropdown
                     value={filters['seller_name']?.value}
                     options={vendedorOptions}
@@ -90,9 +90,9 @@ const VentasPage: React.FC = () => {
                     placeholder="Filtrar por vendedor"
                     showClear
                     className="p-column-filter"
+
                 />
                 <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
                     <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Buscar en tabla..." />
                 </span>
             </div>
@@ -104,32 +104,36 @@ const VentasPage: React.FC = () => {
     }
 
     return (
-        <Card>
-            <h2 className="text-3xl font-bold text-gray-800 mb-2">Gestión de Ventas</h2>
-            <p className="text-gray-600 mb-4">
-                Consulta, filtra y busca en el historial de ventas.
-            </p>
+        <div className="w-full">
+            <Card className="w-full">
+                <h2 className="text-3xl font-bold text-gray-800 mb-2">Gestión de Ventas</h2>
+                <p className="text-gray-600 mb-4">
+                    Consulta, filtra y busca en el historial de ventas.
+                </p>
 
-            {error && <Message severity="error" text={error} className="mb-4 w-full" />}
+                {error && <Message severity="error" text={error} className="mb-4 w-full" />}
 
-            <DataTable
-                value={ventas}
-                paginator
-                rows={10}
-                rowsPerPageOptions={[5, 10, 25, 50]}
-                stripedRows
-                removableSort
-                filters={filters}
-                globalFilterFields={['id', 'seller_name', 'amount', 'date']}
-                header={renderHeader()}
-                emptyMessage="No se encontraron ventas que coincidan."
-            >
-                <Column field="id" header="ID" sortable />
-                <Column field="date" header="Fecha" body={fechaBodyTemplate} sortable />
-                <Column field="seller_name" header="Vendedor" sortable />
-                <Column field="amount" header="Monto" body={montoBodyTemplate} align="right" sortable />
-            </DataTable>
-        </Card>
+                <DataTable
+                    className="w-full"
+                    style={{ width: '100%' }}
+                    value={ventas}
+                    paginator
+                    rows={10}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    stripedRows
+                    removableSort
+                    filters={filters}
+                    globalFilterFields={['id', 'seller_name', 'amount', 'date']}
+                    header={renderHeader()}
+                    emptyMessage="No se encontraron ventas que coincidan."
+                >
+                    <Column field="id" header="ID" sortable />
+                    <Column field="date" header="Fecha" body={fechaBodyTemplate} sortable />
+                    <Column field="seller_name" header="Vendedor" sortable />
+                    <Column field="amount" header="Monto" body={montoBodyTemplate} align="right" sortable />
+                </DataTable>
+            </Card>
+        </div>
     );
 };
 

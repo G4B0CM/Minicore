@@ -35,18 +35,18 @@ class CommissionUseCase:
 
         for seller_id, data in sales_for_seller.items():
             total_sales_seller = data['total']
-            porcentaje = CommissionUseCase.get_percentage_by_commission(total_sales_seller)
-            total_commission = total_sales_seller * porcentaje
+            percentage = CommissionUseCase.get_percentage_by_commission(total_sales_seller)
+            total_commission = total_sales_seller * percentage
 
             commission = CommissionSeller(
                 seller_id=seller_id,
                 seller_name=data['nombre'],
                 total_sales=total_sales_seller,
-                commission_percentage=porcentaje,
+                commission_percentage=percentage,
                 total_commission=total_commission
             )
             commissiones.append(commission)
-            total_commissiones += total_commission
+            total_commissions += total_commission
             total_sales += total_sales_seller
 
         commissiones.sort(key=lambda x: x.total_commission, reverse=True)

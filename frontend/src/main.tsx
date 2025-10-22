@@ -11,8 +11,6 @@ import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 // 4. Utilidades de layout de PrimeFlex (IMPORTANTE)
 import 'primeflex/primeflex.css';
-// 5. Estilos globales que puedas tener (opcional)
-import './index.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -1,134 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { PrimeReactProvider } from 'primereact/api';
+import { Toolbar } from 'primereact/toolbar';
+import { TabView, TabPanel } from 'primereact/tabview';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 
-// Tipos y API
-import { ventasAPI, usuariosAPI } from './services/backend';
-import type { Sale, User } from './services/backend';
+// Importar las páginas
+import HomePage from './pages/Home';
+import UsuariosPage from './pages/Usuarios';
+import VentasPage from './pages/Ventas';
 
-// Componentes de PrimeReact
-import { DataTable, type DataTableFilterMeta } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Dropdown, type DropdownChangeEvent } from 'primereact/dropdown';
-import { InputText } from 'primereact/inputtext';
-import { Card } from 'primereact/card';
-import { Skeleton } from 'primereact/skeleton';
-import { Message } from 'primereact/message';
-import { FilterMatchMode } from 'primereact/api';
+const App: React.FC = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
 
-const VentasPage: React.FC = () => {
-  const [ventas, setVentas] = useState<Sale[]>([]);
-  const [usuarios, setUsuarios] = useState<User[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // --- Estados para los filtros ---
-  const [globalFilterValue, setGlobalFilterValue] = useState('');
-  const [filters, setFilters] = useState<DataTableFilterMeta>({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    seller_name: { value: null, matchMode: FilterMatchMode.EQUALS },
-  });
-
-  useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        const [ventasRes, usuariosRes] = await Promise.all([
-          ventasAPI.obtenerTodas(),
-          usuariosAPI.obtenerTodos()
-        ]);
-        setVentas(ventasRes);
-        setUsuarios(usuariosRes);
-      } catch (err) {
-        setError('Error al cargar los datos. Por favor, recargue la página.');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    cargarDatos();
-  }, []);
-
-  const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    let _filters = { ...filters };
-    _filters['global'] = { value, matchMode: FilterMatchMode.CONTAINS };
-    setFilters(_filters);
-    setGlobalFilterValue(value);
-  };
-
-  const onSellerFilterChange = (e: DropdownChangeEvent) => {
-    const value = e.value;
-    let _filters = { ...filters };
-    _filters['seller_name'] = { value, matchMode: FilterMatchMode.EQUALS };
-    setFilters(_filters);
-  };
-
-  // --- Templates para el DataTable ---
-  const formatearMoneda = (valor: number): string => {
-    return new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(valor);
-  };
-
-  const formatearFecha = (fecha: string): string => {
-    return new Date(`${fecha}T00:00:00`), 'dd/MM/yyyy';
-  };
-
-  const fechaBodyTemplate = (rowData: Sale) => formatearFecha(rowData.date);
-  const montoBodyTemplate = (rowData: Sale) => (
-    <span className="font-bold text-green-600">{formatearMoneda(rowData.amount)}</span>
+  const startContent = (
+    <div className="flex align-items-center gap-2">
+      <i className="pi pi-calculator text-2xl"></i>
+      <span className="font-bold text-xl">Sistema de Comisiones</span>
+    </div>
   );
 
-  const vendedorOptions = usuarios.map(u => ({ label: u.name, value: u.name }));
-
-  const renderHeader = () => {
-    return (
-      <div className="flex justify-content-center align-items-center">
-        <Dropdown
-          value={filters['seller_name']}
-          options={vendedorOptions}
-          onChange={onSellerFilterChange}
-          placeholder="Filtrar por vendedor"
-          showClear
-          className="p-column-filter"
-        />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Buscar en tabla..." />
-        </span>
-      </div>
-    );
-  };
-
-  if (loading) {
-    return <Card><Skeleton width="100%" height="500px" /></Card>;
-  }
-
   return (
-    <Card>
-      <h2 className="text-3xl font-bold text-gray-800 mb-2">Gestión de Ventas</h2>
-      <p className="text-gray-600 mb-4">
-        Consulta, filtra y busca en el historial de ventas.
-      </p>
+    <PrimeReactProvider>
+      <div className="min-h-screen bg-gray-100 ">
+        <Toolbar start={startContent} className="border-round-none shadow-2 " />
 
-      {error && <Message severity="error" text={error} className="mb-4 w-full" />}
-
-      <DataTable
-        value={ventas}
-        paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        stripedRows
-        removableSort
-        filters={filters}
-        globalFilterFields={['id', 'seller_name', 'amount', 'date']}
-        header={renderHeader()}
-        emptyMessage="No se encontraron ventas que coincidan."
-      >
-        <Column field="id" header="ID" sortable />
-        <Column field="date" header="Fecha" body={fechaBodyTemplate} sortable />
-        <Column field="seller_name" header="Vendedor" sortable />
-        <Column field="amount" header="Monto" body={montoBodyTemplate} align="right" sortable />
-      </DataTable>
-    </Card>
+        <div className="p-4 w-full">
+          <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+            <TabPanel header="Inicio" leftIcon="pi pi-home">
+              <HomePage />
+            </TabPanel>
+            <TabPanel header="Vendedores" leftIcon="pi pi-users">
+              <UsuariosPage />
+            </TabPanel>
+            <TabPanel header="Ventas" leftIcon="pi pi-shopping-cart">
+              <VentasPage />
+            </TabPanel>
+          </TabView>
+        </div>
+      </div>
+    </PrimeReactProvider>
   );
 };
 
-export default VentasPage;
+export default App;
 

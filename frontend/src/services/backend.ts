@@ -32,7 +32,7 @@ export interface CommissionSeller {
     total_commission: number;
 }
 
-export interface CommissionSummary {
+export interface CommissionSumary {
     period: string;
     commissions: CommissionSeller[];
     total_commissions: number;
@@ -113,8 +113,8 @@ export const comisionesAPI = {
     obtenerReglas: (): Promise<CommissionRule[]> =>
         api.get('/api/v1/commissions/rules'),
 
-    calcular: (filtroFechas: DateFilter): Promise<CommissionSummary> =>
-        api.post('/api/v1/commissions/calulate', filtroFechas),
+    calcular: (filtroFechas: DateFilter): Promise<CommissionSumary> =>
+        api.post('/api/v1/commissions/calculate', filtroFechas),
 
     obtenerPorVendedor: (vendedorId: number): Promise<SellerCommissionPercentage> =>
         api.get(`/api/v1/commissions/seller/${vendedorId}`),

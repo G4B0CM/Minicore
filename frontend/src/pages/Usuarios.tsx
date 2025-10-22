@@ -74,7 +74,7 @@ const UsuariosPage: React.FC = () => {
     }
 
     return (
-        <div>
+        <div className="w-full">
             <h2 className="text-3xl font-bold text-gray-800 mb-2">Detalle de Vendedores</h2>
             <p className="text-gray-600 mb-4">
                 Desglose de ventas y cálculo de comisiones para cada miembro del equipo.
@@ -94,7 +94,7 @@ const UsuariosPage: React.FC = () => {
                 const leyendaVendedor = <span className="font-bold text-xl">{usuario.name}</span>;
 
                 return (
-                    <Fieldset key={usuario.id} legend={leyendaVendedor} toggleable className="mb-4">
+                    <Fieldset key={usuario.id} legend={leyendaVendedor} toggleable className="mb-4 w-full">
                         {/* Resumen de KPIs del vendedor */}
                         <div className="grid text-center mb-4">
                             <div className="col-12 md:col-4">
@@ -118,7 +118,13 @@ const UsuariosPage: React.FC = () => {
                         </div>
 
                         {/* Tabla de ventas del vendedor */}
-                        <DataTable value={ventasDelVendedor} emptyMessage="Este vendedor no tiene ventas." size="small" stripedRows>
+                        <DataTable
+                            value={ventasDelVendedor}
+                            emptyMessage="Este vendedor no tiene ventas."
+                            size="small"
+                            stripedRows
+                            className="w-full"
+                            style={{ width: '100%' }}>
                             <Column field="date" header="Fecha" body={fechaBodyTemplate} sortable />
                             <Column field="amount" header="Monto" body={montoBodyTemplate} align="right" sortable />
                             <Column header="Categoría" body={estadoBodyTemplate} align="center" />
