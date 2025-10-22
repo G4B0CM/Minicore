@@ -50,16 +50,18 @@ const VentasPage: React.FC = () => {
 
     const onGlobalFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        let _filters = { ...filters };
-        _filters['global'].value = value;
+        const _filters = { ...filters } as DataTableFilterMeta;
+        // Reasignamos el objeto para evitar acceder a `.value` de una unión
+        _filters['global'] = { value, matchMode: FilterMatchMode.CONTAINS } as any;
         setFilters(_filters);
         setGlobalFilterValue(value);
     };
 
     const onSellerFilterChange = (e: DropdownChangeEvent) => {
         const value = e.value;
-        let _filters = { ...filters };
-        _filters['seller_name'].value = value;
+        const _filters = { ...filters } as DataTableFilterMeta;
+        // Reasignamos para evitar mutar `.value` directamente en la unión
+        _filters['seller_name'] = { value, matchMode: FilterMatchMode.EQUALS } as any;
         setFilters(_filters);
     };
 
@@ -84,7 +86,7 @@ const VentasPage: React.FC = () => {
         return (
             <div className="flex justify-content-between align-items-center gap-3">
                 <Dropdown
-                    value={filters['seller_name']?.value}
+                    value={(filters['seller_name'] as any)?.value}
                     options={vendedorOptions}
                     onChange={onSellerFilterChange}
                     placeholder="Filtrar por vendedor"

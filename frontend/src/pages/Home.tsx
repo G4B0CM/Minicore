@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 // API y Tipos
 import { comisionesAPI } from '../services/backend';
-import type { CommissionSummary } from '../services/backend';
+import type { CommissionSumary } from '../services/backend';
 
 // Componentes de PrimeReact
 import { Card } from 'primereact/card';
@@ -19,7 +19,7 @@ import { Skeleton } from 'primereact/skeleton';
 const HomePage: React.FC = () => {
     // --- Estados para el cálculo de comisiones ---
     const [dates, setDates] = useState<Date[] | null>(null);
-    const [commissionData, setCommissionData] = useState<CommissionSummary | null>(null);
+    const [commissionData, setCommissionData] = useState<CommissionSumary | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const toast = useRef<Toast>(null);
