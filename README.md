@@ -154,10 +154,8 @@ Base URL: http://localhost:8000 (local) / https://<backend>.onrender.com (prod)
   "total_sales": 9200.0
 }
 ```
-- GET /api/v1/commissions/seller/{seller_id} :
-```json
- { seller_id, total_sales, percentage_commission }
- ```
+- GET /api/v1/commissions/seller/{seller_id} → { seller_id, total_sales, percentage_commission }
+
 
 ### Interfaces relevantes
 ```ts
@@ -197,8 +195,3 @@ npm ci && npm run build
 ```bash 
 VITE_API_BASE_URL = https://<tu-backend>.onrender.com
 ```
-
-## Licencia
-
-Este proyecto se distribuye bajo la licencia que tú definas (por ejemplo, MIT).
-Crea un archivo LICENSE en la raíz del repo para especificarlo.
