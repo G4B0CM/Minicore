@@ -56,7 +56,6 @@ export interface SaleParams {
 
 // --- 2. Configuración de Axios ---
 
-// MEJORA: Vite usa `import.meta.env` en lugar de `process.env`
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 const api = axios.create({
@@ -66,29 +65,22 @@ const api = axios.create({
     },
 });
 
-// --- 3. Interceptores Mejorados ---
+// --- 3. Interceptores ---
 
 api.interceptors.response.use(
-    // MEJORA: Devolvemos `response.data` directamente en caso de éxito.
-    // Así, tus componentes no tienen que hacer `respuesta.data.propiedad`.
     (response: AxiosResponse) => response.data,
 
     // Interceptor para manejar errores globalmente
     (error: AxiosError) => {
-        // MEJORA: Manejo de errores más detallado
         if (error.response) {
-            // El servidor respondió con un código de error (4xx, 5xx)
             console.error('Error de respuesta:', error.response.data);
             console.error('Status:', error.response.status);
         } else if (error.request) {
-            // La solicitud se hizo, pero no se recibió respuesta (ej. red caída)
             console.error('Sin respuesta del servidor:', error.request);
         } else {
-            // Error al configurar la solicitud
             console.error('Error de configuración Axios:', error.message);
         }
 
-        // Rechazamos la promesa para que el `.catch()` en la llamada original se active
         return Promise.reject(error);
     }
 );
