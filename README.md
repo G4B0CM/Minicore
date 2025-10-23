@@ -14,7 +14,7 @@ Arquitectura frontend + backend desacoplada, lista para despliegue en Render (We
 - [API](#api)
 - [CORS y seguridad](#cors-y-seguridad)
 - [Despliegue en Render](#despliegue-en-render)
-- [Licencia](#licencia)
+- [Desarrollado por](#desarrollado-por)
 
 ## Características
 
@@ -195,3 +195,8 @@ npm ci && npm run build
 ```bash 
 VITE_API_BASE_URL = https://<tu-backend>.onrender.com
 ```
+
+## Desarrollado por
+| Autor |  Contacto |
+|----------------|-------------|
+| Gabriel Calderón | G4B0CM |
