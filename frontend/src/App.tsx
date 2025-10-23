@@ -4,8 +4,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { TabView, TabPanel } from 'primereact/tabview';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
-
-// Importar las páginas
+//Páginas
 import HomePage from './pages/Home';
 import UsuariosPage from './pages/Usuarios';
 import VentasPage from './pages/Ventas';

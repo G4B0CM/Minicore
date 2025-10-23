@@ -93,7 +93,7 @@ export const useHome = () => {
     };
 
     // --- Templates y formateadores ---
-    const formatearMoneda = (valor: number) => new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(valor);
+    const formatMoney = (valor: number) => new Intl.NumberFormat('es-EC', { style: 'currency', currency: 'USD' }).format(valor);
     const KpiCard = ({ title, value, icon, colorClass }: { title: string; value: string; icon: string; colorClass: string; }) => (
         <Card>
             <div className="flex justify-content-between">
@@ -123,7 +123,7 @@ export const useHome = () => {
         //methods
         setDates,
         handleCalculateCommissions,
-        formatearMoneda,
+        formatMoney,
 
         //components
         KpiCard

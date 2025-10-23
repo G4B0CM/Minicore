@@ -14,15 +14,15 @@ class FakeDb:
         ]
 
         self._sales = [
-            Sale(id=1, date=date(2025, 5, 21), seller_id=1, seller_name="Gabriel C", amount=400.00),
-            Sale(id=2, date=date(2025, 7, 29), seller_id=2, seller_name="Gabriel C", amount=600.00),
-            Sale(id=3, date=date(2025, 8, 3), seller_id=2, seller_name="Emilio G", amount=200.00),
-            Sale(id=4, date=date(2025, 9, 9), seller_id=1, seller_name="Eduardo S", amount=300.00),
-            Sale(id=5, date=date(2025, 10, 11), seller_id=3, seller_name="Ariel A", amount=900.00),
-            Sale(id=6, date=date(2025, 10, 14), seller_id=1, seller_name="Eduardo S", amount=500.00),
+            Sale(id=1, date=date(2025, 5, 21), seller_id=1, seller_name="Gabriel C", amount=600.00),
+            Sale(id=2, date=date(2025, 7, 29), seller_id=2, seller_name="Eduardo S", amount=600.00),
+            Sale(id=3, date=date(2025, 8, 3), seller_id=3, seller_name="Emilio G", amount=200.00),
+            Sale(id=4, date=date(2025, 9, 9), seller_id=1, seller_name="Gabriel C", amount=200.00),
+            Sale(id=5, date=date(2025, 10, 11), seller_id=3, seller_name="Emilio G", amount=900.00),
+            Sale(id=6, date=date(2025, 10, 14), seller_id=1, seller_name="Gabriel C", amount=138.00),
             Sale(id=7, date=date(2025, 10, 20), seller_id=4, seller_name="Ariel A", amount=750.00),
-            Sale(id=8, date=date(2025, 10, 22), seller_id=2, seller_name="Gabriel C", amount=450.00),
-            Sale(id=9, date=date(2025, 10, 22), seller_id=3, seller_name="Eduardo S", amount=320.00),
+            Sale(id=8, date=date(2025, 10, 22), seller_id=2, seller_name="Eduardo S", amount=423.00),
+            Sale(id=9, date=date(2025, 10, 22), seller_id=3, seller_name="Emilio G", amount=320.00),
             Sale(id=10, date=date(2025, 10, 21), seller_id=4, seller_name="Ariel A", amount=180.00),
         ]
 

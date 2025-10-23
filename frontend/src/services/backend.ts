@@ -1,5 +1,6 @@
 import axios, { AxiosError, type AxiosResponse } from 'axios';
 
+// --- 1. Interfaces ---
 export interface User {
     id: number;
     name: string;
@@ -39,14 +40,12 @@ export interface CommissionSumary {
     total_sales: number;
 }
 
-// endpoint custom: GET /comisiones/seller/{seller_id}
 export interface SellerCommissionPercentage {
     seller_id: number;
     total_sales: number;
     percentage_commission: number;
 }
 
-// Tipo para los parámetros opcionales de `ventasAPI.obtenerTodas`
 export interface SaleParams {
     start_date?: string;
     end_date?: string;
